@@ -1,54 +1,39 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int option;
-        double weight;
-        String tryAgain = "yes";
-        System.out.println("Weight Conversion Program");
-        System.out.println("1: Convert kgs to lbs");
-        System.out.println("2: Convert lbs to kgs");
-        do{
-            System.out.print("Choose an option: ");
-            // Stop user enter a letter
-            while (!scanner.hasNextInt())
+        Random random = new Random();
+        int guess = 0;
+        int randomNum = random.nextInt(1, 101);
+        System.out.println(randomNum);
+        int turn = 7;
+        System.out.println("Number Guessing Game");
+        System.out.println("Guess a number between 1 - 100");
+        for(int i = 7; i > 0; i--){
+            System.out.printf("You have %d turns left!\n", i);
+            System.out.print("Enter a guess: ");
+            guess = scanner.nextInt();
+            if(guess > randomNum && i != 1)
             {
-                System.out.println("Invalid choice! Try again!");
-                System.out.print("Choose an option: ");
-                scanner.next();
+                System.out.println("TOO HIGH! TRY AGAIN");
             }
-            option = scanner.nextInt();
-
-            switch (option){
-                case 1 -> {
-                    System.out.print("Enter the weight in kgs: ");
-                    weight = scanner.nextDouble();
-                    weight *= 2.20462;
-                    System.out.printf("The new weight in lbs is: %.2f\n", weight);
-                }
-                case 2 -> {
-                    System.out.print("Enter the weight in lbs: ");
-                    weight = scanner.nextDouble();
-                    weight /= 2.20462;
-                    System.out.printf("The new weight in kgs is: %.2f\n", weight);
-                }
-                default -> {
-                    System.out.println("Invalid choice! Try again");
-                    continue;
-                }
+            else if(guess < randomNum && i != 1){
+                System.out.println("TOO LOW! TRY AGAIN");
             }
-            scanner.nextLine();
-            do {
-                System.out.print("Try again? (YES/NO): ");
-                tryAgain = scanner.nextLine();
-                if(!tryAgain.equalsIgnoreCase("yes") && !tryAgain.equalsIgnoreCase("no"))
-                {
-                    System.out.println("Invalid choice! Try again!");
-                }
-            }while (!tryAgain.equalsIgnoreCase("yes") && !tryAgain.equalsIgnoreCase("no"));
-        }while (tryAgain.equalsIgnoreCase("yes"));
-        System.out.println("SEE YOU NEXT TIME!");
+            else{
+                break;
+            }
+        }
+        if(guess == randomNum){
+            System.out.println("YOU WON!");
+            System.out.printf("The correct answer is %d", randomNum);
+        }
+        else {
+            System.out.println("YOU LOSE!");
+            System.out.printf("The correct answer is %d", randomNum);
+        }
         scanner.close();
     }
 }
